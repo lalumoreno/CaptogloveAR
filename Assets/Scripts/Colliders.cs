@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Colliders : MonoBehaviour
 {
-    public Transform capsule;
-    private Renderer capsuleRenderer;
+    private Renderer objRenderer;
+    private Color objColor;
 
     // Start is called before the first frame update
     void Start()
     {
-        capsuleRenderer = capsule.GetComponent<Renderer>();
+        objRenderer = transform.GetComponent<Renderer>();
+        objColor = objRenderer.material.GetColor("_Color");
     }
 
     // Update is called once per frame
@@ -24,7 +23,7 @@ public class Colliders : MonoBehaviour
         if (other.tag == "Player")
         {
             Debug.Log("OnTriggerEnter!!");
-            capsuleRenderer.material.SetColor("_Color", Color.green);
+            objRenderer.material.SetColor("_Color", Color.red);
         }
     }
 
@@ -32,7 +31,7 @@ public class Colliders : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            capsuleRenderer.material.SetColor("_Color", Color.red);
+            objRenderer.material.SetColor("_Color", objColor);
         }
     }
 }
