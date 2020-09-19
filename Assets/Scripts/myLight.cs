@@ -1,29 +1,31 @@
 ﻿using UnityEngine;
 
-public class Colliders : MonoBehaviour
+public class myLight : MonoBehaviour
 {
-    private Renderer objRenderer;
-    private Color objColor;
+    public bool bCollided;
+    public Color cColor;
+    private Renderer rLight;
 
     // Start is called before the first frame update
     void Start()
     {
-        objRenderer = transform.GetComponent<Renderer>();
-        objColor = objRenderer.material.GetColor("_Color");
+        cColor = Color.red;
+        rLight = transform.GetComponent<Renderer>();
+        bCollided = false; 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        rLight.material.SetColor("_Color", cColor);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Debug.Log("OnTriggerEnter!!");
-            objRenderer.material.SetColor("_Color", Color.red);
+            Debug.Log("Light OnTriggerEnter!!");
+            bCollided = true;
         }
     }
 
@@ -31,7 +33,9 @@ public class Colliders : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            objRenderer.material.SetColor("_Color", objColor);
+            bCollided = false;
         }
+
     }
+
 }
