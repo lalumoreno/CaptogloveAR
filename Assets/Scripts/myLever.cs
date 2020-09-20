@@ -2,13 +2,10 @@
 
 public class myLever : MonoBehaviour
 {
-    public Transform tDoor;
     public bool bCollided;
 
     private Vector3 vLocalPosition;
     private float fMaxYPos, fMinYPos, fXPos, fZPos;        
-    private Vector3 vDoorOpenPos;
-    private Vector3 vDoorClosedPos;
     private Transform[] taChildren;
 
     // Start is called before the first frame update
@@ -19,9 +16,6 @@ public class myLever : MonoBehaviour
         fMaxYPos = transform.localPosition.y;
         fMinYPos = fMaxYPos - 2f;
 
-        vDoorClosedPos = tDoor.localPosition;
-        vDoorOpenPos = new Vector3(vDoorClosedPos.x-4, vDoorClosedPos.y, vDoorClosedPos.z);
-
         taChildren = transform.GetComponentsInChildren<Transform>();
         bCollided = false;
     }
@@ -30,16 +24,8 @@ public class myLever : MonoBehaviour
     void Update()
     {
         LimitPosition();
-        OpenDoor();
     }
 
-    private void OpenDoor()
-    {    
-        if (transform.localPosition.y >= fMaxYPos)
-            tDoor.localPosition = vDoorClosedPos;
-        else if (transform.localPosition.y <= fMinYPos)
-            tDoor.localPosition = vDoorOpenPos; 
-    }
 
     private void LimitPosition()
     {
@@ -55,7 +41,7 @@ public class myLever : MonoBehaviour
 
     public void ChangePosition(float vYPos)
     {
-        transform.position = new Vector3(transform.position.x, vYPos, transform.position.z );
+        transform.position = new Vector3(transform.position.x, transform.position.y, vYPos);
     }
 
     private void OnTriggerEnter(Collider other)

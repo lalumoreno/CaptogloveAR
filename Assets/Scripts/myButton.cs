@@ -14,9 +14,9 @@ public class myButton : MonoBehaviour
     void Start()
     {
         vReleasedPos = transform.localPosition;
-        vPressedPos = new Vector3(vReleasedPos.x, vReleasedPos.y, vReleasedPos.z + 0.5f);
+        vPressedPos = new Vector3(vReleasedPos.x, vReleasedPos.y-0.5f, vReleasedPos.z);
         vDoorDownPos = tDoor.localPosition;
-        vDoorUpPos = new Vector3(vDoorDownPos.x, vDoorDownPos.y + 4, vDoorDownPos.z);
+        vDoorUpPos = new Vector3(vDoorDownPos.x-3, vDoorDownPos.y, vDoorDownPos.z);
 
         rButton = transform.GetComponent<Renderer>();
         bCollided = false;

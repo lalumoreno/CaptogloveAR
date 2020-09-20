@@ -3,6 +3,14 @@ using GITEICaptoglove;
 
 public class MainRightHand : MonoBehaviour
 {
+    //Assign transforms in Unity editor
+    public Transform tHand;    
+    public Transform tThumb;
+    public Transform tIndex;
+    public Transform tMiddle;
+    public Transform tRing;    
+    public Transform tPinky;    
+
     public myButton button;    
     public myLever lever;
     public myLight mylight;
@@ -17,7 +25,9 @@ public class MainRightHand : MonoBehaviour
         //Configuration for Captoglove sensor as Right Hand 
         RightHand = new MyHand(2443, MyHand.eHandType.TYPE_RIGHT_HAND);
         RightHand.EnableLog();
-        
+        RightHand.SetHandTransform(tHand, Module.eModuleAxis.AXIS_X, Module.eModuleAxis.AXIS_Z, Module.eModuleAxis.AXIS_Y);
+        RightHand.SetFingerTransform(tThumb, tIndex, tMiddle, tRing, tPinky);    
+
         //Messages in display
         style = new GUIStyle();
         style.normal.textColor = Color.black;        
@@ -28,7 +38,7 @@ public class MainRightHand : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {      
         //Enables finger movement
         RightHand.MoveFingers();        
 
@@ -77,11 +87,12 @@ public class MainRightHand : MonoBehaviour
     private void CatchLever()
     {
         Vector3 vHandPos = RightHand.GetHandPosition();
+        Debug.Log("Hand z = " + vHandPos.z.ToString());
 
-        if ((vHandPos.y - 1) > 7.5f &&
-            (vHandPos.y - 1) < 12f)
+       if (vHandPos.z > -15f && 
+           vHandPos.z < -12f )
         {
-            lever.ChangePosition( vHandPos.y - 1);
+            lever.ChangePosition( vHandPos.z);
         }
     }
 
