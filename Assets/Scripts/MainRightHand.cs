@@ -3,8 +3,7 @@ using GITEICaptoglove;
 
 public class MainRightHand : MonoBehaviour
 {
-    //Assign transforms in Unity editor
-    public Transform tHand;    
+    //Assign transforms in Unity editor 
     public Transform tThumb;
     public Transform tIndex;
     public Transform tMiddle;
@@ -25,7 +24,7 @@ public class MainRightHand : MonoBehaviour
         //Configuration for Captoglove sensor as Right Hand 
         RightHand = new MyHand(2443, MyHand.eHandType.TYPE_RIGHT_HAND);
         RightHand.EnableLog();
-        RightHand.SetHandTransform(tHand, Module.eModuleAxis.AXIS_X, Module.eModuleAxis.AXIS_Z, Module.eModuleAxis.AXIS_Y);
+        RightHand.SetHandTransform(transform, Module.eModuleAxis.AXIS_X, Module.eModuleAxis.AXIS_Z, Module.eModuleAxis.AXIS_Y);
         RightHand.SetFingerTransform(tThumb, tIndex, tMiddle, tRing, tPinky);    
 
         //Messages in display
@@ -80,20 +79,14 @@ public class MainRightHand : MonoBehaviour
     private void CatchCapsule()
     {
         Vector3 vMiddlePos = RightHand.GetMiddlePosition();
-        capsule.ChangePosition(new Vector3(vMiddlePos.x, vMiddlePos.y, vMiddlePos.z + 1));
+        capsule.ChangePosition(new Vector3(vMiddlePos.x-2, vMiddlePos.y, vMiddlePos.z));
         capsule.ChangeRotation(RightHand.GetHandRotation());        
     }
 
     private void CatchLever()
     {
         Vector3 vHandPos = RightHand.GetHandPosition();
-        Debug.Log("Hand z = " + vHandPos.z.ToString());
-
-       if (vHandPos.z > -15f && 
-           vHandPos.z < -12f )
-        {
-            lever.ChangePosition( vHandPos.z);
-        }
+        lever.ChangePosition( vHandPos.z);
     }
 
     void OnGUI()
